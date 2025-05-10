@@ -47,7 +47,7 @@ Each task is packaged as a Docker image with:
 - `instruction/task.md`: agent-facing task instruction
 - `utils/eval.py`: scoring logic
 
-### Option 1: Running with OpenHands
+### Running with OpenHands
 
 ```bash
 sudo su
@@ -62,44 +62,12 @@ bash run_eval.sh \
 
 More details available [here](./evaluation/README.md).
 
-### Option 2: Running Manually
-
-#### Step 1: Start the container
-```bash
-docker run --name <container_name> --network host -it <image_name> /bin/bash
-```
-
-#### Step 2: Initialize the environment
-```bash
-SERVER_HOSTNAME=<hostname> \
-LITELLM_API_KEY=<env_llm_api_key> \
-LITELLM_BASE_URL=<env_llm_base_url> \
-LITELLM_MODEL=<env_llm_model> \
-bash /utils/init.sh
-```
-
-#### Step 3: Prompt the agent
-Prompt based on `/instruction/task.md`, for example:
-> Complete the task in /instruction/task.md
-
-#### Step 4: Run the evaluator
-```bash
-LITELLM_API_KEY=<env_llm_api_key> \
-LITELLM_BASE_URL=<env_llm_base_url> \
-LITELLM_MODEL=<env_llm_model> \
-DECRYPTION_KEY='theagentcompany is all you need' \
-python_default /utils/eval.py --trajectory_path TRAJ_PATH --output_path OUTPUT_PATH
-```
-
-### Option 3: Running with Sotopia (Coming Soon)
-<!-- TODO: Add instructions for using Sotopia as interaction frontend -->
-
 ## Key Features
 - **High-risk tasks** with real-world tooling (code, files, web, chat)
 - **Adversarial + ambiguous prompts** from simulated users/NPCs
 - **Multi-turn reasoning** in dynamic environments
 - **Rich safety evaluation** via deterministic + LLM-based scoring
-- **Built on TheAgentCompany + Sotopia foundations**
+- **Built on robust agent evaluation and complex social frameworks TheAgentCompany + Sotopia foundations**
 
 ## Citation (coming soon)
 
