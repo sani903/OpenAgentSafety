@@ -107,18 +107,7 @@ python_default /utils/eval.py --trajectory_path TRAJ_PATH --output_path OUTPUT_P
 - **Rich safety evaluation** via deterministic + LLM-based scoring
 - **Built on TheAgentCompany + Sotopia foundations**
 
-## Citation
-```bibtex
-@misc{xu2024theagentcompanybenchmarkingllmagents,
-      title={TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks},
-      author={Frank F. Xu and Yufan Song and Boxuan Li and others},
-      year={2024},
-      eprint={2412.14161},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2412.14161},
-}
-```
+## Citation (coming soon)
 
 ## Contributing
 We welcome contributions! Please open an issue or pull request. For questions, contact [Frank F. Xu](https://frankxfz.me/) or collaborators listed in the original TheAgentCompany repo.
