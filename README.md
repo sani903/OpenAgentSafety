@@ -1,7 +1,6 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <img src="./docs/images/OAS_logo.png" alt="Logo" width="200">
   <h1 align="center">OpenAgentSafety: Evaluating Agent Safety in Realistic, High-Risk Simulations</h1>
 </div>
 
@@ -22,10 +21,6 @@
 **OpenAgentSafety (OAS)** is an open-source benchmark built on top of [TheAgentCompany](https://github.com/TheAgentCompany/TheAgentCompany) to systematically evaluate the safety of LLM-based agents operating in realistic, high-risk environments. Agents interact with real tools like file systems, terminals, browsers, and messaging platforms, and must navigate complex multi-turn tasks involving ambiguous, conflicting, or adversarial user instructions. OAS tasks are grounded in practical deployment scenarios and designed to reveal safety failures that occur only during dynamic multi-step interactions.
 
 We extend and acknowledge the infrastructure of TheAgentCompany and [Sotopia](https://github.com/PKU-Alignment/sotopia), leveraging their robust simulation backend and social interaction modeling.
-
-<div align="center">
-  <img src="./docs/images/OAS_architecture.png">
-</div>
 
 ## Installation & Setup
 
