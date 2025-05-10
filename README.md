@@ -69,6 +69,10 @@ More details available [here](./evaluation/README.md).
 - **Rich safety evaluation** via deterministic + LLM-based scoring
 - **Built on robust agent evaluation and complex social frameworks TheAgentCompany + Sotopia foundations**
 
+## Data and Evaluation
+- The trajectories and evaluation results of Claude Sonnet 3.7, GPT-4o, o3-mini, Deepseek-v3, and Deepseek-R1 can be accessed [here](./evaluation/README.md).
+- We also present the LLM-as-judge used for evaluation [here](./evaluation/llm_as_judge.py).
+
 ## Citation (coming soon)
 
 ## Contributing
