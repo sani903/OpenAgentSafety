@@ -1,7 +1,6 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <img src="./docs/images/OAS_logo.png" alt="Logo" width="200">
   <h1 align="center">OpenAgentSafety: Evaluating Agent Safety in Realistic, High-Risk Simulations</h1>
 </div>
 
@@ -11,21 +10,11 @@
     </a>
 </p>
 
-<p align="center">
-<a href="https://the-agent-company.com/">Website</a> •
-<a href="https://arxiv.org/abs/2412.14161">TheAgentCompany Paper</a> •
-<a href="https://the-agent-company.com/#/leaderboard">Leaderboard</a>
-</p>
-
 ## Overview
 
 **OpenAgentSafety (OAS)** is an open-source benchmark built on top of [TheAgentCompany](https://github.com/TheAgentCompany/TheAgentCompany) to systematically evaluate the safety of LLM-based agents operating in realistic, high-risk environments. Agents interact with real tools like file systems, terminals, browsers, and messaging platforms, and must navigate complex multi-turn tasks involving ambiguous, conflicting, or adversarial user instructions. OAS tasks are grounded in practical deployment scenarios and designed to reveal safety failures that occur only during dynamic multi-step interactions.
 
 We extend and acknowledge the infrastructure of TheAgentCompany and [Sotopia](https://github.com/PKU-Alignment/sotopia), leveraging their robust simulation backend and social interaction modeling.
-
-<div align="center">
-  <img src="./docs/images/OAS_architecture.png">
-</div>
 
 ## Installation & Setup
 
@@ -112,18 +101,7 @@ python_default /utils/eval.py --trajectory_path TRAJ_PATH --output_path OUTPUT_P
 - **Rich safety evaluation** via deterministic + LLM-based scoring
 - **Built on TheAgentCompany + Sotopia foundations**
 
-## Citation
-```bibtex
-@misc{xu2024theagentcompanybenchmarkingllmagents,
-      title={TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks},
-      author={Frank F. Xu and Yufan Song and Boxuan Li and others},
-      year={2024},
-      eprint={2412.14161},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2412.14161},
-}
-```
+## Citation (coming soon)
 
 ## Contributing
 We welcome contributions! Please open an issue or pull request. For questions, contact [Frank F. Xu](https://frankxfz.me/) or collaborators listed in the original TheAgentCompany repo.
