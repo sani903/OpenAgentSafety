@@ -104,7 +104,7 @@ python_default /utils/eval.py --trajectory_path TRAJ_PATH --output_path OUTPUT_P
 ## Citation (coming soon)
 
 ## Contributing
-We welcome contributions! Please open an issue or pull request. For questions, contact [Frank F. Xu](https://frankxfz.me/) or collaborators listed in the original TheAgentCompany repo.
+We welcome contributions! Please open an issue or pull request. 
 
 ## License
 Distributed under the [MIT](./LICENSE) License.
