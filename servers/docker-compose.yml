@@ -1,0 +1,137 @@
+services:
+  gitlab:
+    ############################################################
+    # Uncomment build lines, and comment the image lines to
+    # build the gitlab image from scratch
+    # build:
+    #   context: ./gitlab
+    image: ghcr.io/theagentcompany/servers-gitlab:1.0.0
+    pull_policy: always
+    ############################################################
+    container_name: gitlab
+    restart: always
+    hostname: the-agent-company.com
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://the-agent-company.com:$GITLAB_PORT'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2424
+    ports:
+      - '$GITLAB_PORT:8929'
+      - '8930:443' 
+      - '2424:22'
+    shm_size: '256m'
+
+  owncloud:
+    image: ghcr.io/theagentcompany/servers-owncloud:1.0.0
+    container_name: owncloud
+    pull_policy: always
+    restart: always
+    depends_on:
+      - owncloud-collabora
+    ports:
+      - "8092:80"
+    environment:
+      - OWNCLOUD_DOMAIN=the-agent-company.com:8092
+      - OWNCLOUD_TRUSTED_DOMAINS=localhost,the-agent-company.com:8092
+      - OWNCLOUD_ADMIN_USERNAME=theagentcompany
+      - OWNCLOUD_ADMIN_PASSWORD=theagentcompany
+    extra_hosts:
+      - "the-agent-company.com:host-gateway"
+    networks:
+      - owncloud_network
+
+  owncloud-collabora:
+    image: collabora/code:24.04.9.2.1
+    container_name: owncloud-collabora
+    restart: always
+    ports:
+      - "9980:9980"
+    environment:
+      - extra_params=--o:ssl.enable=false
+    extra_hosts:
+      - "the-agent-company.com:host-gateway"
+    networks:
+      - owncloud_network
+
+  rocketchat:
+    image: registry.rocket.chat/rocketchat/rocket.chat:5.3.0
+    restart: always
+    container_name: rocketchat
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.rocketchat.rule: Host(`${DOMAIN:-}`)
+      traefik.http.routers.rocketchat.tls: "true"
+      traefik.http.routers.rocketchat.entrypoints: https
+      traefik.http.routers.rocketchat.tls.certresolver: le
+    extra_hosts:
+      - "the-agent-company.com:host-gateway"
+    environment:
+      ADMIN_USERNAME: theagentcompany
+      ADMIN_PASS: theagentcompany
+      ADMIN_EMAIL: theagentcompany@example.com
+      ADMIN_NAME: theagentcompany
+      Show_Setup_Wizard: completed
+      OVERWRITE_SETTING_Show_Setup_Wizard: completed
+      MONGO_URL: "${MONGO_URL:-\
+        mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/\
+        ${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
+      MONGO_OPLOG_URL: "${MONGO_OPLOG_URL:\
+        -mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/\
+        local?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
+      ROOT_URL: ${ROOT_URL:-http://the-agent-company.com:3000}
+      PORT: ${PORT:-3000}
+      DEPLOY_METHOD: docker
+      DEPLOY_PLATFORM: ${DEPLOY_PLATFORM:-}
+      REG_TOKEN: ${REG_TOKEN:-}
+    depends_on:
+      - mongodb
+    expose:
+      - ${PORT:-3000}
+    ports:
+      - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
+
+  mongodb:
+    image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-5.0}
+    restart: always
+    container_name: rocketchat-mongodb
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: ${MONGODB_REPLICA_SET_NAME:-rs0}
+      MONGODB_PORT_NUMBER: ${MONGODB_PORT_NUMBER:-27017}
+      MONGODB_INITIAL_PRIMARY_HOST: ${MONGODB_INITIAL_PRIMARY_HOST:-mongodb}
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: ${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}
+      MONGODB_ADVERTISED_HOSTNAME: ${MONGODB_ADVERTISED_HOSTNAME:-mongodb}
+      MONGODB_ENABLE_JOURNAL: ${MONGODB_ENABLE_JOURNAL:-true}
+      ALLOW_EMPTY_PASSWORD: ${ALLOW_EMPTY_PASSWORD:-yes}
+  
+  redis-stack:
+    image: redis/redis-stack-server:7.4.0-v0
+    container_name: redis-stack
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_ARGS=--requirepass theagentcompany --user theagentcompany on >theagentcompany ~* &* +@all
+    networks:
+      - rocketchat-redis-net
+
+  redis-stack-npc-data-population:
+    image: ghcr.io/theagentcompany/servers-rocketchat-npc-data-population:1.0.0
+    container_name: redis-stack-npc-data-population
+    pull_policy: always
+    restart: on-failure
+    depends_on:
+      - redis-stack
+    networks:
+      - rocketchat-redis-net
+
+volumes:
+  mongodb_data: { driver: local }
+
+networks:
+  rocketchat-redis-net:
+    driver: bridge
+  owncloud_network:
+    driver: bridge
+
