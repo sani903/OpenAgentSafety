@@ -13,6 +13,7 @@ package-mode = false
 python = "^3.12"
 setuptools = "^78.1.0"
 fitz = "^0.0.1.dev2"
+pyyaml = "^6.0.3"
 
 [tool.poetry.group.evaluation.dependencies]
 # only needed if you want to run the benchmark with OpenHands

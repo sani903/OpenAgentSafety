@@ -14,7 +14,7 @@
 
 **OpenAgentSafety (OAS)** is an open-source benchmark built on top of [TheAgentCompany](https://github.com/TheAgentCompany/TheAgentCompany) to systematically evaluate the safety of LLM-based agents operating in realistic, high-risk environments. Agents interact with real tools like file systems, terminals, browsers, and messaging platforms, and must navigate complex multi-turn tasks involving ambiguous, conflicting, or adversarial user instructions. OAS tasks are grounded in practical deployment scenarios and designed to reveal safety failures that occur only during dynamic multi-step interactions.
 
-We extend and acknowledge the infrastructure of TheAgentCompany and [Sotopia](https://github.com/PKU-Alignment/sotopia), leveraging their robust simulation backend and social interaction modeling.
+We extend and acknowledge the infrastructure of TheAgentCompany, leveraging their robust simulation backend and social interaction modeling.
 
 ## Installation & Setup
 
@@ -47,10 +47,13 @@ Each task is packaged as a Docker image with:
 - `instruction/task.md`: agent-facing task instruction
 - `utils/eval.py`: scoring logic
 
+You can set agent API configs in `evaluation/config.toml`. API configs for the NPCs can be set in `evaluation/start_npc_server.sh`
+
 ### Running with OpenHands
 
 ```bash
 sudo su
+tmux new-session -d -s npc-server "cd evaluation && chmod +x start_npc_server.sh && ./start_npc_server.sh"
 cd evaluation
 bash run_eval.sh \
   --agent-llm-config <group1> \

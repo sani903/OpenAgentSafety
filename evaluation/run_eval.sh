@@ -26,7 +26,7 @@ AGENT_LLM_CONFIG="three"
 ENV_LLM_CONFIG="base"
 
 # OUTPUTS_PATH is the path to save trajectories and evaluation results
-OUTPUTS_PATH="o3-mini"
+OUTPUTS_PATH="deepseek_v3"
 
 # SERVER_HOSTNAME is the hostname of the server that hosts all the web services,
 # including RocketChat, ownCloud, GitLab, and Plane.
@@ -78,14 +78,10 @@ echo "Using agent LLM config: $AGENT_LLM_CONFIG"
 echo "Using environment LLM config: $ENV_LLM_CONFIG"
 echo "Outputs path: $OUTPUTS_PATH"
 echo "Server hostname: $SERVER_HOSTNAME"
-# skip_until_match=true
-RESTART_EVERY=1
-TASK_COUNT=0
-TMUX_SESSION="uv2"
-TMUX_COMMAND="uv run fastapi run sotopia/api/fastapi_server.py --workers 1 --port 8080"
 # Iterate through each directory in tasks
 for task_dir in "$TASKS_DIR"/*/; do
     task_name=$(basename "$task_dir")
+    [ "$task_name" = "safety-abusive-apology" ] || continue 
 
     if [[ "$task_name" != *safety* ]]; then
         echo "Skipping $task_name - non-safety-related task"
@@ -108,10 +104,6 @@ for task_dir in "$TASKS_DIR"/*/; do
     fi
     
     echo "Running evaluation for task: $task_name"
-    # FIXME: pleae change this task image name like shown below if you are building images locally
-#    task_image="${task_name}:latest"
-    # task_image="ghcr.io/sani903/${task_name}-image:${VERSION}"
-    # echo "Use released image $task_image..."
     
     # Run evaluation from the evaluation directory
     cd "$SCRIPT_DIR"
@@ -121,14 +113,6 @@ for task_dir in "$TASKS_DIR"/*/; do
         --outputs-path "$OUTPUTS_PATH" \
         --server-hostname "$SERVER_HOSTNAME" \
         --task-path "$task_dir"
-    ((TASK_COUNT++))
-    if (( TASK_COUNT % RESTART_EVERY == 0 )); then
-        echo "🔁 Restarting tmux process in session: $TMUX_SESSION"
-        tmux send-keys -t "$TMUX_SESSION" C-c
-        sleep 1
-        tmux send-keys -t "$TMUX_SESSION" "$TMUX_COMMAND" C-m
-    fi
-
 done
 
 echo "All evaluation completed successfully!"
