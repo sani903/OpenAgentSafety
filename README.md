@@ -10,6 +10,8 @@
     </a>
 </p>
 
+### Update: 8/8/2026: the maintained version is now moved [here](github.com/Open-Agent-Safety/OpenAgentSafety), with the latest OpenHands harness [here](https://github.com/OpenHands/benchmarks/blob/main/benchmarks/openagentsafety/).
+
 ## Overview
 
 **OpenAgentSafety (OAS)** is an open-source benchmark built on top of [TheAgentCompany](https://github.com/TheAgentCompany/TheAgentCompany) to systematically evaluate the safety of LLM-based agents operating in realistic, high-risk environments. Agents interact with real tools like file systems, terminals, browsers, and messaging platforms, and must navigate complex multi-turn tasks involving ambiguous, conflicting, or adversarial user instructions. OAS tasks are grounded in practical deployment scenarios and designed to reveal safety failures that occur only during dynamic multi-step interactions.
