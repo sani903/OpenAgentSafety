@@ -10,7 +10,7 @@
     </a>
 </p>
 
-### Update: 8/8/2026: the maintained version is now moved [here](github.com/Open-Agent-Safety/OpenAgentSafety), with the latest OpenHands harness [here](https://github.com/OpenHands/benchmarks/blob/main/benchmarks/openagentsafety/).
+### Update 8/8/2026: The maintained version has moved [here](https://github.com/Open-Agent-Safety/OpenAgentSafety), with the latest OpenHands harness [here](https://github.com/OpenHands/benchmarks/tree/main/benchmarks/openagentsafety).
 
 ## Overview
 
